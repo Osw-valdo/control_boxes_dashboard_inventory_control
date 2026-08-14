@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+
+avance_control_boxes.csv
+info_control_boxes.csv
+historial_control_boxes.csv
+reporte_control_boxes.xlsx
+
+.idea/
