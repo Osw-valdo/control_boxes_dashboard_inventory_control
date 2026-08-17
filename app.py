@@ -540,18 +540,35 @@ def calcular_estado_entrega(fecha_estimada):
 
     return f"Faltan {dias} días"
 
+def grafica_dona(
+    titulo,
+    completados,
+    pendientes,
+    porcentaje,
+    colores,
+    altura=260,
+    leyenda=False
+):
+    # Si la gráfica tiene leyenda, reservamos espacio a la derecha
+    # y mantenemos la dona centrada en el área visible.
+    dominio_x = [0.30, 0.70] if leyenda else [0.0, 1.0]
 
-def grafica_dona(titulo, completados, pendientes, porcentaje, colores, altura=260, leyenda=False):
-    fig = go.Figure(data=[
-        go.Pie(
-            labels=["Completado", "Pendiente"],
-            values=[completados, pendientes],
-            hole=0.68,
-            marker=dict(colors=colores),
-            textinfo="none",
-            hovertemplate="%{label}: %{value}<extra></extra>"
-        )
-    ])
+    fig = go.Figure(
+        data=[
+            go.Pie(
+                labels=["Completado", "Pendiente"],
+                values=[completados, pendientes],
+                hole=0.68,
+                marker=dict(colors=colores),
+                textinfo="none",
+                hovertemplate="%{label}: %{value}<extra></extra>",
+                domain=dict(
+                    x=dominio_x,
+                    y=[0.0, 1.0]
+                )
+            )
+        ]
+    )
 
     fig.add_annotation(
         text=f"<b>{porcentaje:.1f}%</b>",
@@ -573,11 +590,16 @@ def grafica_dona(titulo, completados, pendientes, porcentaje, colores, altura=26
         margin=dict(t=58, b=20, l=12, r=12),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        legend=dict(font=dict(color="#E5E7EB"))
+        legend=dict(
+            x=0.74,
+            y=0.50,
+            xanchor="left",
+            yanchor="middle",
+            font=dict(color="#E5E7EB")
+        )
     )
 
     return fig
-
 
 def agregar_historial(df_historial, control_box, punto, estado, responsable):
     accion = "Marcado como completado" if estado else "Marcado como pendiente"
@@ -1175,150 +1197,342 @@ with tab3:
 # =========================
 
 with tab4:
+
     st.markdown("### Editar checklist")
 
-    control_boxes = sorted(df["Control Box"].unique().tolist())
+    control_boxes = sorted(
+        df["Control Box"].unique().tolist()
+    )
 
     if len(control_boxes) > 0:
+
         control_box_seleccionada = st.selectbox(
             "Selecciona la Control Box que deseas editar",
             control_boxes,
             key="editar_box"
         )
 
-        df_seleccionada = df[df["Control Box"] == control_box_seleccionada].copy()
-        total_sel, comp_sel, pend_sel, porc_sel = obtener_avance(df_seleccionada)
+        df_seleccionada = df[
+            df["Control Box"] == control_box_seleccionada
+        ].copy()
 
-        responsable_actual = obtener_responsable(df_info, control_box_seleccionada)
-
-        st.markdown(f"""
-        <div class="soft-card">
-            <h3>{control_box_seleccionada}</h3>
-            <p><b>Avance:</b> {porc_sel:.1f}% &nbsp; | &nbsp; 
-            <b>Completados:</b> {comp_sel}/{total_sel} &nbsp; | &nbsp;
-            <b>Pendientes:</b> {pend_sel} &nbsp; | &nbsp;
-            <b>Responsable:</b> {responsable_actual if responsable_actual else "Sin responsable"}</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        df_anterior = df_seleccionada[["Punto", "Completado"]].copy()
-
-        df_editado = st.data_editor(
-            df_seleccionada[["Punto", "Completado"]],
-            width="stretch",
-            hide_index=True,
-            disabled=not tiene_permiso(["Operador", "Técnico", "Supervisor", "Admin"]),
-            column_config={
-                "Punto": st.column_config.TextColumn(
-                    "Punto de armado",
-                    width="large"
-                ),
-                "Completado": st.column_config.CheckboxColumn(
-                    "Completado",
-                    help="Marca si la tarea ya fue completada",
-                    default=False
-                )
-            }
+        total_sel, comp_sel, pend_sel, porc_sel = obtener_avance(
+            df_seleccionada
         )
 
-        for _, row in df_editado.iterrows():
-            punto = row["Punto"]
-            completado_nuevo = bool(row["Completado"])
+        responsable_actual = obtener_responsable(
+            df_info,
+            control_box_seleccionada
+        )
 
-            valor_anterior = df_anterior[df_anterior["Punto"] == punto]["Completado"]
+        # =========================
+        # TARJETA DE INFORMACIÓN
+        # =========================
 
-            if len(valor_anterior) > 0:
-                completado_anterior = bool(valor_anterior.iloc[0])
+        st.markdown(
+            f"""<div class="soft-card">
+        <h3>{control_box_seleccionada}</h3>
+        <p>
+        <b>Avance:</b> {porc_sel:.1f}%
+        &nbsp; | &nbsp;
+        <b>Completados:</b> {comp_sel}/{total_sel}
+        &nbsp; | &nbsp;
+        <b>Pendientes:</b> {pend_sel}
+        &nbsp; | &nbsp;
+        <b>Responsable:</b> {responsable_actual if responsable_actual else "Sin responsable"}
+        </p>
+        </div>""",
+            unsafe_allow_html=True
+        )
 
-                if completado_anterior != completado_nuevo:
-                    df_historial = agregar_historial(
-                        df_historial,
-                        control_box_seleccionada,
-                        punto,
-                        completado_nuevo,
-                        responsable_actual
+        # Guardamos una copia del estado anterior
+        df_anterior = df_seleccionada[
+            ["Punto", "Completado"]
+        ].copy()
+
+        # =========================
+        # FORMULARIO CHECKLIST
+        # =========================
+
+        with st.form(
+            key=f"form_checklist_{control_box_seleccionada}",
+            clear_on_submit=False
+        ):
+
+            df_editado = st.data_editor(
+                df_seleccionada[
+                    ["Punto", "Completado"]
+                ],
+                width="stretch",
+                hide_index=True,
+                key=f"editor_{control_box_seleccionada}",
+
+                # No permitir editar el nombre
+                # de la actividad aquí
+                disabled=["Punto"],
+
+                column_config={
+
+                    "Punto":
+                        st.column_config.TextColumn(
+                            "Punto de armado",
+                            width="large"
+                        ),
+
+                    "Completado":
+                        st.column_config.CheckboxColumn(
+                            "Completado",
+                            help=(
+                                "Marca todas las tareas necesarias "
+                                "y después presiona Guardar avance"
+                            ),
+                            default=False
+                        )
+                }
+            )
+
+            guardar_avance = st.form_submit_button(
+                "💾 Guardar avance",
+                width="stretch"
+            )
+
+        # =========================
+        # GUARDAR TODOS LOS CAMBIOS
+        # =========================
+
+        if guardar_avance:
+
+            cambios_realizados = 0
+
+            for _, row in df_editado.iterrows():
+
+                punto = row["Punto"]
+
+                completado_nuevo = bool(
+                    row["Completado"]
+                )
+
+                valor_anterior = df_anterior[
+                    df_anterior["Punto"] == punto
+                ]["Completado"]
+
+                if len(valor_anterior) > 0:
+
+                    completado_anterior = bool(
+                        valor_anterior.iloc[0]
                     )
 
-            df.loc[
-                (df["Control Box"] == control_box_seleccionada) &
-                (df["Punto"] == punto),
-                "Completado"
-            ] = completado_nuevo
+                    # Registrar solamente si cambió
+                    if completado_anterior != completado_nuevo:
 
-        guardar(df)
-        guardar_historial(df_historial)
+                        cambios_realizados += 1
 
-        if tiene_permiso(["Técnico", "Supervisor", "Admin"]):
-            st.markdown("### Administrar tareas de esta Control Box")
+                        df_historial = agregar_historial(
+                            df_historial,
+                            control_box_seleccionada,
+                            punto,
+                            completado_nuevo,
+                            responsable_actual
+                        )
+
+                # Actualizar dataframe principal
+                df.loc[
+                    (
+                        df["Control Box"]
+                        == control_box_seleccionada
+                    )
+                    &
+                    (
+                        df["Punto"]
+                        == punto
+                    ),
+                    "Completado"
+                ] = completado_nuevo
+
+            # Guardar después de procesar
+            # TODAS las actividades
+            guardar(df)
+            guardar_historial(df_historial)
+
+            if cambios_realizados > 0:
+
+                st.success(
+                    f"✅ {cambios_realizados} cambios guardados correctamente."
+                )
+
+            else:
+
+                st.info(
+                    "No se detectaron cambios."
+                )
+
+            st.rerun()
+
+        # =========================
+        # ADMINISTRAR TAREAS
+        # =========================
+
+        if tiene_permiso(
+            ["Técnico", "Supervisor", "Admin"]
+        ):
+
+            st.markdown(
+                "### Administrar tareas de esta Control Box"
+            )
 
             col_agregar, col_eliminar = st.columns(2)
 
             with col_agregar:
+
                 nueva_tarea = st.text_input(
                     "Nueva tarea",
-                    placeholder="Ej. Validar comunicación Ethernet"
+                    placeholder=(
+                        "Ej. Validar comunicación Ethernet"
+                    ),
+                    key="nueva_tarea_editor"
                 )
 
-                if st.button("Agregar tarea"):
+                if st.button(
+                    "➕ Agregar tarea",
+                    key="agregar_tarea_editor"
+                ):
+
                     if nueva_tarea.strip() != "":
+
                         nueva_fila = pd.DataFrame({
-                            "Control Box": [control_box_seleccionada],
-                            "Punto": [nueva_tarea.strip()],
-                            "Completado": [False]
+                            "Control Box": [
+                                control_box_seleccionada
+                            ],
+                            "Punto": [
+                                nueva_tarea.strip()
+                            ],
+                            "Completado": [
+                                False
+                            ]
                         })
 
-                        df = pd.concat([df, nueva_fila], ignore_index=True)
-                        guardar(df)
-                        st.rerun()
-                    else:
-                        st.warning("Escribe el nombre de la tarea.")
-
-            with col_eliminar:
-                if tiene_permiso(["Admin"]):
-                    if len(df_seleccionada) > 0:
-                        tarea_eliminar = st.selectbox(
-                            "Tarea a eliminar",
-                            df_seleccionada["Punto"]
+                        df = pd.concat(
+                            [df, nueva_fila],
+                            ignore_index=True
                         )
 
-                        if st.button("Eliminar tarea"):
+                        guardar(df)
+
+                        st.rerun()
+
+                    else:
+
+                        st.warning(
+                            "Escribe el nombre de la tarea."
+                        )
+
+            with col_eliminar:
+
+                if tiene_permiso(["Admin"]):
+
+                    if len(df_seleccionada) > 0:
+
+                        tarea_eliminar = st.selectbox(
+                            "Tarea a eliminar",
+                            df_seleccionada["Punto"],
+                            key="eliminar_tarea_editor"
+                        )
+
+                        if st.button(
+                            "🗑️ Eliminar tarea",
+                            key="boton_eliminar_tarea"
+                        ):
+
                             df = df[
                                 ~(
-                                    (df["Control Box"] == control_box_seleccionada) &
-                                    (df["Punto"] == tarea_eliminar)
+                                    (
+                                        df["Control Box"]
+                                        == control_box_seleccionada
+                                    )
+                                    &
+                                    (
+                                        df["Punto"]
+                                        == tarea_eliminar
+                                    )
                                 )
                             ]
 
                             guardar(df)
+
                             st.rerun()
+
                     else:
-                        st.info("No hay tareas para eliminar.")
+
+                        st.info(
+                            "No hay tareas para eliminar."
+                        )
+
                 else:
-                    st.warning("Solo Admin puede eliminar tareas.")
+
+                    st.warning(
+                        "Solo Admin puede eliminar tareas."
+                    )
+
+        # =========================
+        # REINICIO
+        # =========================
 
         if tiene_permiso(["Admin"]):
+
             st.markdown("### Reinicio")
 
             col_reset1, col_reset2 = st.columns(2)
 
             with col_reset1:
-                if st.button("Reiniciar esta Control Box"):
-                    df.loc[df["Control Box"] == control_box_seleccionada, "Completado"] = False
+
+                if st.button(
+                    "Reiniciar esta Control Box",
+                    key="reiniciar_box_editor"
+                ):
+
+                    df.loc[
+                        df["Control Box"]
+                        == control_box_seleccionada,
+                        "Completado"
+                    ] = False
+
                     guardar(df)
+
                     st.rerun()
 
             with col_reset2:
-                confirmar_reset = st.checkbox("Confirmo reiniciar todo el proyecto")
 
-                if st.button("Reiniciar todo el proyecto"):
+                confirmar_reset = st.checkbox(
+                    "Confirmo reiniciar todo el proyecto",
+                    key="confirmar_reset_editor"
+                )
+
+                if st.button(
+                    "Reiniciar todo el proyecto",
+                    key="reiniciar_proyecto_editor"
+                ):
+
                     if confirmar_reset:
+
                         df["Completado"] = False
+
                         guardar(df)
+
                         st.rerun()
+
                     else:
-                        st.warning("Activa la confirmación antes de reiniciar todo.")
+
+                        st.warning(
+                            "Activa la confirmación antes "
+                            "de reiniciar todo."
+                        )
+
     else:
-        st.warning("No hay Control Boxes creadas. Crea una para comenzar.")
+
+        st.warning(
+            "No hay Control Boxes creadas. "
+            "Crea una para comenzar."
+        )
 
 # =========================
 # TAB 5 - INFO Y FECHAS
