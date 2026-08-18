@@ -1,10 +1,8 @@
 import os
-import base64
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 from datetime import datetime, date
-from pathlib import Path
 
 st.set_page_config(
     page_title="Control Box Dashboard",
@@ -778,7 +776,7 @@ def guardar_movimientos_inventario(df_movimientos):
 
 def normalizar_catalogo_materiales(df_catalogo):
     columnas = [
-        "Modelo", "Imagen", "Descripcion", "Unidad", "Tipo",
+        "Modelo", "Descripcion", "Unidad", "Tipo",
         "Cantidad_Ensamble", "Cantidad_Atornillado"
     ]
 
@@ -788,7 +786,7 @@ def normalizar_catalogo_materiales(df_catalogo):
                 0 if columna in ["Cantidad_Ensamble", "Cantidad_Atornillado"] else ""
             )
 
-    for columna in ["Modelo", "Imagen", "Descripcion", "Unidad", "Tipo"]:
+    for columna in ["Modelo", "Descripcion", "Unidad", "Tipo"]:
         df_catalogo[columna] = df_catalogo[columna].fillna("").astype(str).str.strip()
 
     for columna in ["Cantidad_Ensamble", "Cantidad_Atornillado"]:
@@ -833,26 +831,6 @@ def normalizar_inventario(df_inventario, df_catalogo):
     return df_inventario.sort_values("Modelo").reset_index(drop=True)
 
 
-
-def imagen_a_data_uri(ruta_relativa):
-    ruta_relativa = str(ruta_relativa or "").strip()
-
-    if not ruta_relativa:
-        return ""
-
-    ruta = Path(ruta_relativa)
-
-    if not ruta.exists():
-        return ""
-
-    try:
-        contenido = ruta.read_bytes()
-        encoded = base64.b64encode(contenido).decode("ascii")
-        return f"data:image/png;base64,{encoded}"
-    except Exception:
-        return ""
-
-
 def evaluar_bom(df_catalogo, df_inventario, tipo_cb):
     columna = (
         "Cantidad_Ensamble"
@@ -863,7 +841,7 @@ def evaluar_bom(df_catalogo, df_inventario, tipo_cb):
     bom = df_catalogo[
         df_catalogo[columna] > 0
     ][
-        ["Modelo", "Imagen", "Descripcion", "Unidad", "Tipo", columna]
+        ["Modelo", "Descripcion", "Unidad", "Tipo", columna]
     ].copy()
 
     bom = bom.rename(columns={columna: "Cantidad_Requerida"})
@@ -1072,10 +1050,8 @@ def render_inventario():
         if solo_faltantes:
             tabla = tabla[~tabla["Suficiente"]].copy()
 
-        tabla["Imagen"] = tabla["Imagen"].apply(imagen_a_data_uri)
-
         tabla = tabla[[
-            "Imagen", "Modelo", "Descripcion", "Unidad",
+            "Modelo", "Descripcion", "Unidad",
             "Cantidad_Requerida", "Stock_Disponible",
             "Faltante", "CB_Posibles", "Estado"
         ]].rename(columns={
@@ -1085,18 +1061,7 @@ def render_inventario():
             "CB_Posibles": "CB posibles"
         })
 
-        st.dataframe(
-            tabla,
-            width="stretch",
-            hide_index=True,
-            row_height=72,
-            column_config={
-                "Imagen": st.column_config.ImageColumn(
-                    "Imagen",
-                    width="small"
-                )
-            }
-        )
+        st.dataframe(tabla, width="stretch", hide_index=True)
 
     with tab_mov:
         if tiene_permiso(["Técnico", "Supervisor", "Admin"]):
@@ -2459,12 +2424,12 @@ def render_proyecto(proyecto, color_proyecto):
 
 nombres_proyectos = df_proyectos["Proyecto"].astype(str).tolist()
 
-if len(nombres_proyectos) > 0:
-    etiquetas_tabs = nombres_proyectos + ["📦 Inventario"]
-    tabs_principales = st.tabs(etiquetas_tabs)
+# Panel desplegable de inventario
+with st.expander("📦 Inventario", expanded=False):
+    render_inventario()
 
-    tabs_proyectos = tabs_principales[:-1]
-    tab_inventario = tabs_principales[-1]
+if len(nombres_proyectos) > 0:
+    tabs_proyectos = st.tabs(nombres_proyectos)
 
     for tab_proyecto, nombre in zip(tabs_proyectos, nombres_proyectos):
         color = str(
@@ -2476,8 +2441,5 @@ if len(nombres_proyectos) > 0:
 
         with tab_proyecto:
             render_proyecto(nombre, color)
-
-    with tab_inventario:
-        render_inventario()
 else:
     st.warning("No hay proyectos configurados.")

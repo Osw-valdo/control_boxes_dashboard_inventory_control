@@ -1,0 +1,76 @@
+﻿Modelo,Imagen,Descripcion,Unidad,Tipo,Cantidad_Ensamble,Cantidad_Atornillado
+18051,imagenes_materiales/18051.png,"DYMO 18051 TUBING, HEAT SHRINK 6mmX1.5m, WHITE",Pieza,Armado,7,7
+500-009,imagenes_materiales/500-009.png,"PLUG DB9 PARA SOLDAR, SIN CUBIERTA",Pieza,Armado,2,2
+500-109,imagenes_materiales/500-109.png,JACK DB9 PARA SOLDAR. CONECTOR DB9 HEMBRA,Pieza,Armado,2,2
+500-409,imagenes_materiales/500-409.png,"Cubierta de plástico (Concha), para conector DB9",Pieza,Armado,2,2
+57-40140,imagenes_materiales/57-40140.png,57 Series Soldering/DIP-Type Connector hembra 14 pines,Pieza,Armado,3,3
+57-40240,imagenes_materiales/57-40240.png,SP57 Series Soldering/DIP-Type Connector hembra 24 pines,Pieza,Armado,3,3
+57-40360,imagenes_materiales/57-40360.png,57 Series Soldering/DIP-Type Connector hembra 36 pines,Pieza,Armado,3,3
+A22NW-2BM-TGA-G100-GC,imagenes_materiales/A22NW-2BM-TGA-G100-GC.png,Switch de encendido gabinete,Pieza,Armado,1,1
+AE36195,imagenes_materiales/AE36195.png,Terminal espada,Pieza,Armado,150,200
+AMPF-3,imagenes_materiales/AMPF-3.png,Porta fusible Americano de cartuch,Pieza,Armado,1,1
+BNC230,imagenes_materiales/BNC230.png,"Cubierta / Tapa Antipolvo, Cubierta Antipolvo, Bloques de Terminales BNH/BN, PC (Policarbonato) (1000mm X pz)",Pieza,Armado,2,2
+BNE15W,imagenes_materiales/BNE15W.png,"Cubierta de Extremo, Para Usarse con Clemas BNH10W, BNH15MW y BNH15LW",Pieza,Armado,6,10
+BNH15MW,imagenes_materiales/BNH15MW.png,"Bloque de Terminal c/Montaje en Riel DIN, 2 Posiciones, 22 AWG, 14 AWG, 2 mm², Tornillo, 10 A",Pieza,Armado,60,68
+BNJ26FWB,imagenes_materiales/BNJ26FWB.png,"Jumper (Bus bar), Puente, Bloques de terminales BN1U-20W, 6 Posiciones, 8 mm, Serie BNH",Pieza,Armado,8,8
+BNL6,imagenes_materiales/BNL6.png,"Accesorio para Conector, Tope de Riel DIN, Bloques de Terminales de Alimentaci&#243;n serie BN",Pieza,Armado,10,10
+BNM7,imagenes_materiales/BNM7.png,"Marcador de Bloque de Terminales, Marcador de Bloque de Terminales (9.5mm X 1000mm)",Pieza,Armado,2,2
+Conector AC,imagenes_materiales/Conector_AC.png,Conector de alimentación electrica,Pieza,Armado,1,1
+DNR274-200,imagenes_materiales/DNR274-200.png,RIEL DIN (2000mm x pieza),Pieza,Armado,1,1
+FA-0.75-BK-100,imagenes_materiales/FA-0.75-BK-100.png,Cable Calibre 18 Negro,Metro,Armado,5,5
+FA-0.75-R-100,imagenes_materiales/FA-0.75-R-100.png,Cable Calibre 18 Rojo,Metro,Armado,5,5
+FAME 4,imagenes_materiales/FAME_4.png,Fusible 32mm 4A,Pieza,Armado,1,1
+KD-210-20-H,imagenes_materiales/KD-210-20-H.png,Ducto de cableado (Canaleta) (2 mts),Pieza,Armado,2,2
+NJC-207-RF,imagenes_materiales/NJC-207-RF.png,Conector Hembra 07 pines,Pieza,Armado,2,2
+NJC-2410-RF,imagenes_materiales/NJC-2410-RF.png,Conector Hembra 10 pines,Pieza,Armado,2,2
+NJC-244-RF,imagenes_materiales/NJC-244-RF.png,Conector Hembra 04 pines,Pieza,Armado,2,2
+NW080-30S-C6,imagenes_materiales/NW080-30S-C6.png,Modelo de montaje en panel (STP/CAT5e/CAT6),Pieza,Armado,5,5
+NW080-66S-SI-BK,imagenes_materiales/NW080-66S-SI-BK.png,Conector pasamuros serial,Pieza,Armado,1,1
+SDG400,imagenes_materiales/SDG400.png,D-Sub Tools & Hardware,Pieza,Armado,4,4
+SL199-50-43-SS,imagenes_materiales/SL199-50-43-SS.png,Caja de aluminio misumi,Pieza,Armado,1,1
+SS30WS-5P-100,imagenes_materiales/SS30WS-5P-100.png,"Cable 10 hilos COMPATIBLE CON UL, BLINDAJE DE DOBLE CAPA MISUMI ROLLO DE 100 METROS",Metro,Armado,3,3
+U09A-BF-BM-0.5,imagenes_materiales/U09A-BF-BM-0.5.png,Conector USB tipo B rapido para gabinete,Pieza,Armado,1,1
+UL1007-22-BE-100,imagenes_materiales/UL1007-22-BE-100.png,Cable Calibre 22 Azul,Metro,Armado,80,80
+UL1007-22-BK-100,imagenes_materiales/UL1007-22-BK-100.png,Cable Calibre 22 Negro,Metro,Armado,30,30
+UL1007-22-R-100,imagenes_materiales/UL1007-22-R-100.png,Cable Calibre 22 Rojo,Metro,Armado,30,30
+57-30140,imagenes_materiales/57-30140.png,Conector macho DC 14pines,Pieza,Arneses,3,3
+57-30240,imagenes_materiales/57-30240.png,Conector macho DDK 24 pines,Pieza,Arneses,3,3
+57-30360,imagenes_materiales/57-30360.png,Conectores para alimentacion macho DC 36 pines,Pieza,Arneses,3,3
+AE34144,imagenes_materiales/AE34144.png,Terminal de Ojo de cal 18-22 1/8,Pieza,Arneses,6,6
+LPPG8025BU,imagenes_materiales/LPPG8025BU.png,"BOTA PARA CONECTOR PLUG RJ45 CAT6 TVC , COLOR AZUL (100 PIEZAS)",Pieza,Arneses,16,28
+NARVCTF-0.5-3-100,imagenes_materiales/NARVCTF-0.5-3-100.png,Cable multiconductor. NARVCTF PSE Compliant (NARVCTF-0.5-3-100),Metro,Arneses,5,5
+NJC-207-PM,imagenes_materiales/NJC-207-PM.png,Conector Macho 07 pines,Pieza,Arneses,2,2
+NJC-2410-PM,imagenes_materiales/NJC-2410-PM.png,Conector Macho 10 pines,Pieza,Arneses,2,2
+NJC-244-PM,imagenes_materiales/NJC-244-PM.png,Conector Macho 04 pines,Pieza,Arneses,2,2
+NUC6C04BUFE,imagenes_materiales/NUC6C04BUFE.png,"cable de cobre NK6™, categoría 6, 24 AWG, UTP, azul Rollo de 305 mts",Metro,Arneses,14,24
+SS30WS-13P-100,imagenes_materiales/SS30WS-13P-100.png,"Cable 26 hilos COMPATIBLE CON UL, BLINDAJE DE DOBLE CAPA MISUMI ROLLO DE 100 METROS",Metro,Arneses,5,5
+SS30WS-17P-100,imagenes_materiales/SS30WS-17P-100.png,"Cable 34 hilos COMPATIBLE CON UL, BLINDAJE DE DOBLE CAPA MISUMI ROLLO DE 100 METROS",Metro,Arneses,5,5
+TDPTC6S,imagenes_materiales/TDPTC6S.png,Conector Cat 6 grado industrial metalico,Pieza,Arneses,16,28
+467-80060,imagenes_materiales/467-80060.png,467-80060 FOLDING TORQUE ARM 10NM 600MM REACH ASG MODEL# FTA010-600.,Pieza,Atornillado,0,1
+467-90078,imagenes_materiales/467-90078.png,467-90078 BALANCER 1-2KG 1600MM LENGTH.,Pieza,Atornillado,0,2
+467-90113,imagenes_materiales/467-90113.png,467-90113 SD 2500 TOOL HOLDER FTA 10-15.,Pieza,Atornillado,0,1
+476-ASG-NW2500,imagenes_materiales/476-ASG-NW2500.png,X-PAQ NETWORK MODULE.,Pieza,Atornillado,0,1
+476-ASG-SD2500-20PL-SY,imagenes_materiales/476-ASG-SD2500-20PL-SY.png,"XPAQ SYSTEM, 20 LB IN PUSH/LEVER START.",Pieza,Atornillado,0,1
+OM2623M,imagenes_materiales/OM2623M.png,OM2623M SCREW PRESENTER – MAX DIAM: 2.3MM,Pieza,Atornillado,0,1
+KV-7000C,imagenes_materiales/KV-7000C.png,Unidad de comunicación/expación PLC,Pieza,Dispositvos,0,1
+KV-8000,imagenes_materiales/KV-8000.png,PLC,Pieza,Dispositvos,0,1
+KV-B16RC,imagenes_materiales/KV-B16RC.png,Unidad de comunicación/expación PLC,Pieza,Dispositvos,0,1
+KV-B16XC,imagenes_materiales/KV-B16XC.png,Unidad de comunicación/expación PLC,Pieza,Dispositvos,0,2
+KV-L21V,imagenes_materiales/KV-L21V.png,Unidad de comunicación/expación PLC,Pieza,Dispositvos,0,1
+KV-M16G,imagenes_materiales/KV-M16G.png,Tarjeta de memoria PLC/Sistema de vision/HMI etc. SD 16 GB,Pieza,Dispositvos,0,1
+KV-N1,imagenes_materiales/KV-N1.png,Unidad de comunicación/expación PLC,Pieza,Dispositvos,1,0
+KV-N10L,imagenes_materiales/KV-N10L.png,Unidad de comunicación/expación PLC,Pieza,Dispositvos,1,0
+KV-N40DR,imagenes_materiales/KV-N40DR.png,PLC,Pieza,Dispositvos,1,0
+KV-NC1EP,imagenes_materiales/KV-NC1EP.png,Unidad de comunicación/expación PLC,Pieza,Dispositvos,1,0
+KV-XLE02,imagenes_materiales/KV-XLE02.png,Unidad de comunicación/expación PLC,Pieza,Dispositvos,0,1
+PCRY-4M1N,imagenes_materiales/PCRY-4M1N.png,4-Point Relay Terminal PCRY,Pieza,Dispositvos,1,1
+S8VKC24024,imagenes_materiales/S8VKC24024.png,Fuente de alimentacion FUENTE D 10 AMP 24,Pieza,Dispositvos,1,1
+W4S1-05D,imagenes_materiales/W4S1-05D.png,Switch,Pieza,Dispositvos,1,1
+3SU1801-2GA00-2AA1,imagenes_materiales/3SU1801-2GA00-2AA1.png,Boton Finish/ start,Pieza,Perifericos,1,1
+506-040,imagenes_materiales/506-040.png,"Cable jack a jack DB9 Null Modem, de 3 m",Pieza,Perifericos,1,1
+FJCU15A-PS-4,imagenes_materiales/FJCU15A-PS-4.png,Cable de alimentacion electrica,Pieza,Perifericos,1,1
+ICUSB232V2,imagenes_materiales/ICUSB232V2.png,Cable de 0.3m USB a Puerto Serial RS232 DB9.,Pieza,Perifericos,1,1
+IES208,imagenes_materiales/IES208.png,Sensor inductivo,Pieza,Perifericos,0,1
+PR-FB15N3,imagenes_materiales/PR-FB15N3.png,SENSOR PRESENCIA. PR-FB15N3,Pieza,Perifericos,0,1
+PZ-V11,imagenes_materiales/PZ-V11.png,"Tipo de cable reflectivo cuadrado, NPN",Pieza,Perifericos,1,0
+VT5-W07,imagenes_materiales/VT5-W07.png,"HMI 7""",Pieza,Perifericos,1,1

@@ -2456,15 +2456,14 @@ def render_proyecto(proyecto, color_proyecto):
 # =========================
 # PESTAÑAS DINÁMICAS DE PROYECTOS
 # =========================
-
 nombres_proyectos = df_proyectos["Proyecto"].astype(str).tolist()
 
-if len(nombres_proyectos) > 0:
-    etiquetas_tabs = nombres_proyectos + ["📦 Inventario"]
-    tabs_principales = st.tabs(etiquetas_tabs)
+# Panel desplegable de inventario
+with st.expander("📦 Inventario", expanded=False):
+    render_inventario()
 
-    tabs_proyectos = tabs_principales[:-1]
-    tab_inventario = tabs_principales[-1]
+if len(nombres_proyectos) > 0:
+    tabs_proyectos = st.tabs(nombres_proyectos)
 
     for tab_proyecto, nombre in zip(tabs_proyectos, nombres_proyectos):
         color = str(
@@ -2476,8 +2475,6 @@ if len(nombres_proyectos) > 0:
 
         with tab_proyecto:
             render_proyecto(nombre, color)
-
-    with tab_inventario:
-        render_inventario()
 else:
     st.warning("No hay proyectos configurados.")
+
